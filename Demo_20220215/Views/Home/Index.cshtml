@@ -1,0 +1,66 @@
+﻿@{
+    ViewBag.Title = "home page";
+}
+<h2>Employee Data</h2>
+<div class="row">
+    <div class="col-md-4">輸入電腦編號</div>
+    <div class="col-md-4"><input type="text" id="txtEmpNo" /></div>
+    <div class="col-md-4"><input type="button" id="btnSearch" class="btn-info" value="查詢"
+                                 onclick="GetEmpData()" /></div>
+
+</div>
+<div id="empdatalist">
+</div>
+
+@section Scripts{
+    <script>
+        $(function () {
+            GetEmpData();
+    });
+    function GetEmpData(EmpNo){
+        var EmpNo = $('#txtEmpNo').val();
+        $.ajax(
+            {
+                type: 'POST',
+                url: '@Url.Action("empdata")',
+                data: { 'EmpNo': EmpNo},
+                dataType: 'HTML',
+                success: function (r) {
+                    $('#empdatalist').html(r);
+                },
+                error: function (a, b, c) {
+                    console.log(a);
+                    console.log(b);
+                    console.log(c);
+                }
+
+            });
+        }
+
+        function Delete(EmpNo) {
+            $.ajax(
+            {
+                type: 'POST',
+                url: '@Url.Action("DeletePost")',
+                data: { 'EmpNo': EmpNo},                
+                success: function (r) {
+                    if (r.IsSuccess) {
+                        alert('ok');
+                        GetEmpData();
+                    }
+                    else {
+                        alert(r.Msg);
+                    }
+                },
+                error: function (a, b, c) {
+                    console.log(a);
+                    console.log(b);
+                    console.log(c);
+                }
+
+            });
+        }
+    </script>  
+    
+}
+

@@ -1,0 +1,27 @@
+﻿@model List<Demo_20220215.Models.EM_Model>
+<table class="table table-boarded table-responsive">
+    <tr>
+        <th>@Html.LabelFor(model => model.FirstOrDefault().EmpNo)</th>
+        <th>@Html.LabelFor(model => model.FirstOrDefault().Name)</th>
+        <th>@Html.LabelFor(model => model.FirstOrDefault().Ext)</th>
+    </tr>
+   
+</form>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td class="text-center">@item.EmpNo</td>
+            <td class="text-center">@item.Name</td>
+            <td class="text-center">@item.Ext</td>
+            <td class="text-center">
+                <a href="@Url.Action("edit", new {EmpNo = item.EmpNo})" class="btn btn-warning">修改</a>
+                @*<input type="button" value="修改" class="btn btn-warning"/>*@
+                <input type="button" value="刪除" class="btn btn-danger" onclick="Delete('@item.EmpNo')" />
+                <a href="@Url.Action("addPost")" class="btn btn-success">新增</a>
+
+            </td>
+            
+
+        </tr>
+    }
+</table>

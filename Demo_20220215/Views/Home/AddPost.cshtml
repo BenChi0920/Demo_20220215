@@ -1,0 +1,49 @@
+﻿@model Demo_20220215.Models.EM_Model
+@{
+    ViewBag.Title = "AddPost";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>新增員工</h2>
+
+    <div class="row row-cols-2"> @Html.LabelFor(model => model.EmpNo)</div>
+    <div><input type="text" id="txtEmpNo" value="" /></div>
+    <div class="row row-cols-2">@Html.LabelFor(model => model.Name)</div>
+    <div><input type="text" id="txtName" value="" /></div>
+    <div class="row row-cols-2">@Html.LabelFor(model => model.Ext)</div>
+    <div><input type="number" id="txtExp" min="0000" max="9999" value="" /></div>
+    <input class="btn btn-primary" type="button" value="新增" onclick="AddEmp()" />
+
+    @section Scripts
+        {
+        <script>
+function AddEmp() {
+                $.ajax(
+                    {
+                        type: 'POST',
+                        url: '@Url.Action("AddPost")',
+                        data: { 'EmpNo': $('#txtEmpNo').val(), 'Name': $('#txtName').val(), 'Ext': $('#txtExt').val() },
+                        success: function (r) {
+
+
+                            if (r.IsSuccess) {
+                                alert('ok');
+                            }
+                            else {
+                                alert(r.Msg);
+                            }
+                        },
+                        error: function (a, b, c) {
+                            console.log(a);
+                            console.log(b);
+                            console.log(c);
+                        }
+                    });
+            }
+        </script>
+        <div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+
+
